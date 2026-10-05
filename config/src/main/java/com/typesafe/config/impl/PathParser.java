@@ -221,7 +221,7 @@ final class PathParser {
 
     // the idea is to see if the string has any chars or features
     // that might require the full parser to deal with.
-    private static boolean looksUnsafeForFastParser(String s) {
+    static boolean looksUnsafeForFastParser(String s) {
         boolean lastWasDot = true; // start of path is also a "dot"
         int len = s.length();
         if (s.isEmpty())
@@ -269,7 +269,7 @@ final class PathParser {
 
     // do something much faster than the full parser if
     // we just have something like "foo" or "foo.bar"
-    private static Path speculativeFastParsePath(String path) {
+    static Path speculativeFastParsePath(String path) {
         String s = ConfigImplUtil.unicodeTrim(path);
         if (looksUnsafeForFastParser(s))
             return null;
