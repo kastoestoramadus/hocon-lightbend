@@ -236,6 +236,13 @@ final class PathParser {
             if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_') {
                 lastWasDot = false;
                 continue;
+            } else if (c >= '0' && c <= '9') {
+                // a digit inside an element is fine ("prop50", "oauth2Client"),
+                // but an element starting with a digit goes to the full parser,
+                // which normalizes number tokens ("1e5", "50cent")
+                if (lastWasDot)
+                    return true;
+                continue;
             } else if (c == '.') {
                 if (lastWasDot)
                     return true; // ".." means we need to throw an error
